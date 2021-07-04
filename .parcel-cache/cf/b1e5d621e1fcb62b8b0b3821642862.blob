@@ -1,0 +1,242 @@
+var helpers = require("../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+try {
+  var _socketIoClient = require('socket.io-client');
+  var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+  var _socketIoClientDefault = _parcelHelpers.interopDefault(_socketIoClient);
+  var _react = require('react');
+  var _reactDefault = _parcelHelpers.interopDefault(_react);
+  var _reactDom = require('react-dom');
+  var _reactDomDefault = _parcelHelpers.interopDefault(_reactDom);
+  var _moment = require('moment');
+  var _momentDefault = _parcelHelpers.interopDefault(_moment);
+  require("bootstrap/dist/css/bootstrap.css");
+  require("./styles.css");
+  var _jsxFileName = "/Users/matthewng/Documents/projects/websockets_demo/websocket_chatapp/src/client.js", _s = $RefreshSig$();
+  const username = prompt('What is your name');
+  const socket = _socketIoClientDefault.default('http://localhost:3000', {
+    transports: ['websocket', 'polling']
+  });
+  const Client = ({}) => {
+    _s();
+    const [users, setUsers] = _react.useState([]);
+    const [message, setMessage] = _react.useState('');
+    const [messages, setMessages] = _react.useState([]);
+    _react.useEffect(() => {
+      socket.on('connect', () => {
+        socket.emit('username', username);
+      });
+      socket.on('users', users => {
+        setUsers(users);
+      });
+      socket.on('message', message => {
+        setMessages(messages => [...messages, message]);
+      });
+      socket.on('connected', user => {
+        setUsers(user => [...users, user]);
+      });
+      socket.on('disconnected', id => {
+        setUsers(users => users.filter(user => user.id !== id));
+      });
+    }, []);
+    const onSubmit = event => {
+      event.preventDefault();
+      socket.emit('send', message);
+      setMessage('');
+    };
+    return (
+      /*#__PURE__*/_reactDefault.default.createElement("div", {
+        className: "container",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 49,
+          columnNumber: 5
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("div", {
+        className: "row",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 50,
+          columnNumber: 7
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("div", {
+        className: "col-md-12 mt-4 mb-4",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 51,
+          columnNumber: 9
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("h4", {
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 52,
+          columnNumber: 11
+        }
+      }, "Hello ", username))), /*#__PURE__*/_reactDefault.default.createElement("div", {
+        className: "row",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 55,
+          columnNumber: 7
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("div", {
+        className: "col-md-8",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 56,
+          columnNumber: 9
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("h5", {
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 57,
+          columnNumber: 11
+        }
+      }, "Messages"), /*#__PURE__*/_reactDefault.default.createElement("div", {
+        id: "messages",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 58,
+          columnNumber: 11
+        }
+      }, messages.map(({user, date, text}, index) => /*#__PURE__*/_reactDefault.default.createElement("div", {
+        key: index,
+        className: "row mb-2",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 60,
+          columnNumber: 15
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("h6", {
+        className: "col-lg-3",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 61,
+          columnNumber: 17
+        }
+      }, _momentDefault.default(date).format("h:mm:ss a")), /*#__PURE__*/_reactDefault.default.createElement("h6", {
+        className: "col-lg-2",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 64,
+          columnNumber: 17
+        }
+      }, user.name), /*#__PURE__*/_reactDefault.default.createElement("h6", {
+        className: "col-lg-2",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 65,
+          columnNumber: 17
+        }
+      }, text)))), /*#__PURE__*/_reactDefault.default.createElement("form", {
+        onSubmit: onSubmit,
+        id: "form",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 69,
+          columnNumber: 11
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("div", {
+        className: "input-group",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 70,
+          columnNumber: 13
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("input", {
+        type: "text",
+        className: "form-control",
+        onChange: e => setMessage(e.currentTarget.value),
+        value: message,
+        id: "text",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 71,
+          columnNumber: 15
+        }
+      }), /*#__PURE__*/_reactDefault.default.createElement("span", {
+        className: "input-group-btn",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 78,
+          columnNumber: 15
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("button", {
+        id: "submit",
+        type: "submit",
+        className: "btn btn-primary",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 79,
+          columnNumber: 17
+        }
+      }, "Send"))))), /*#__PURE__*/_reactDefault.default.createElement("div", {
+        className: "col-md-4",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 86,
+          columnNumber: 9
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("h5", {
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 87,
+          columnNumber: 11
+        }
+      }, "Users"), /*#__PURE__*/_reactDefault.default.createElement("ul", {
+        id: "users",
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 88,
+          columnNumber: 11
+        }
+      }, users.map(({name, id}) => /*#__PURE__*/_reactDefault.default.createElement("li", {
+        key: id,
+        __self: undefined,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 90,
+          columnNumber: 15
+        }
+      }, name))))))
+    );
+  };
+  _s(Client, "/BsqBCKdIK3mn0Dq0cZDlDV4mkM=");
+  _c = Client;
+  _reactDomDefault.default.render(/*#__PURE__*/_reactDefault.default.createElement(Client, {
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 99,
+      columnNumber: 17
+    }
+  }), document.getElementById("root"));
+  var _c;
+  $RefreshReg$(_c, "Client");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

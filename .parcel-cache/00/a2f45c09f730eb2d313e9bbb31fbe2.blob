@@ -1,0 +1,9 @@
+<html>
+  <head>
+    <title>Web Socket Chat Room</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="09bf531434635ed8e4974bd96cd1c77b"></script>
+  </body>
+</html>
