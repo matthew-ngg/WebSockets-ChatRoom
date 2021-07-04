@@ -37,10 +37,6 @@ const Client = ({}) => {
     socket.on('disconnected', id => {
       setUsers(users => users.filter(user => user.id !== id))
     })
-
-    socket.on('subscribe', res => {
-      if(username === res.user.name) alert(`You've successfully subscribed!`)
-    })
   }, [])
 
   const onSubmit = event => {
