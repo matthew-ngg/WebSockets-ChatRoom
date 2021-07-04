@@ -1,9 +1,10 @@
+import io from 'socket.io-client'
+
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import io from 'socket.io-client'
 import moment from 'moment'
-
-import { StyledWrapper } from './client.styles'
+import "bootstrap/dist/css/bootstrap.css"
+import "./styles.css"
 
 const username = prompt('What is your name')
 
@@ -36,6 +37,10 @@ const Client = ({}) => {
     socket.on('disconnected', id => {
       setUsers(users => users.filter(user => user.id !== id))
     })
+
+    socket.on('subscribe', res => {
+      if(username === res.user.name) alert(`You've successfully subscribed!`)
+    })
   }, [])
 
   const onSubmit = event => {
@@ -45,36 +50,53 @@ const Client = ({}) => {
   }
 
   return (
-    <>
-      <h1>{`Hello ${username}`}</h1>
-      <StyledWrapper>
-      <div>
-        {messages.map(({ user, date, text }, index) => (
-          <>
-            {moment(date).format('h:mm:ss a')}
-            <p>{user.name}</p>
-            <p>{text}</p>
-          </>
-        ))}
+    <div className="container">
+      <div className="row">
+        <div className="col-md-12 mt-4 mb-4">
+          <h4>Hello {username}</h4>
+        </div>
       </div>
-
-      <div>
-        <form onSubmit={onSubmit}>
-          <input  type='text' onChange={e => setMessage(e.currentTarget.value)} value={message} />
-          <button type="submit">Send</button>
-        </form>
-      </div>
-
-      <div>
-          <h1>Users</h1>
-          <ul>
+      <div className="row">
+        <div className="col-md-8">
+          <h5>Messages</h5>
+          <div id="messages">
+            {messages.map(({ user, date, text }, index) => (
+              <div key={index} className="row mb-2">
+                <h6 className="col-lg-3">
+                  {moment(date).format("h:mm:ss a")}
+                </h6>
+                <h6 className="col-lg-2">{user.name}</h6>
+                <h6 className="col-lg-2">{text}</h6>
+              </div>
+            ))}
+          </div>
+          <form onSubmit={onSubmit} id="form">
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                onChange={e => setMessage(e.currentTarget.value)}
+                value={message}
+                id="text"
+              />
+              <span className="input-group-btn">
+                <button id="submit" type="submit" className="btn btn-primary">
+                  Send
+                </button>
+              </span>
+            </div>
+          </form>
+        </div>
+        <div className="col-md-4">
+          <h5>Users</h5>
+          <ul id="users">
             {users.map(({ name, id }) => (
-              <li>{name}</li>
+              <li key={id}>{name}</li>
             ))}
           </ul>
+        </div>
       </div>
-      </StyledWrapper>
-    </>
+    </div>
   );
 }
 
