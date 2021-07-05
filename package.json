@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "npm run start:server & npm run start:client",
-    "start:client": "parcel src/index.html",
+    "start:client": "parcel public/index.html",
     "start:server": "nodemon src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

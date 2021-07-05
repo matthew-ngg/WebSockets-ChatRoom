@@ -1060,7 +1060,7 @@ try {
   require("./styles.css");
   var _jsxFileName = "/Users/matthewng/Documents/projects/websockets_demo/websocket_chatapp/src/client.js", _s = $RefreshSig$();
   const username = prompt('What is your name');
-  const socket = _socketIoClientDefault.default('http://localhost:3000', {
+  const socket = _socketIoClientDefault.default('/', {
     transports: ['websocket', 'polling']
   });
   const Client = ({}) => {
