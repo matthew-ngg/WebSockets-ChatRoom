@@ -8,7 +8,7 @@ import "./styles.css"
 
 const username = prompt('What is your name')
 
-const socket = io('http://localhost:3000', {
+const socket = io('/', {
   transports: ['websocket', 'polling']
 })
 
